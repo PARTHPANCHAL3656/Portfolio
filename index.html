@@ -610,6 +610,134 @@
     .lv-mid { color:var(--muted-2); background:rgba(255,255,255,.05); }
     .lv-new { color:var(--muted); background:rgba(255,255,255,.02); }
 
+/* ============================
+   CERTIFICATES SECTION
+============================ */
+#certs { padding:116px 52px; border-top:1px solid var(--border); }
+
+.cert-grid {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1px; background:var(--border);
+}
+.cert-card {
+  background:var(--surface);
+  padding:36px 32px;
+  position:relative;
+  cursor:none;
+  transition:background .25s, border-color .25s;
+  display:flex; flex-direction:column; gap:20px;
+  overflow:hidden;
+}
+.cert-card:hover { background:var(--surface-2); }
+.cert-card::after {
+  content:'';
+  position:absolute; bottom:0; left:0;
+  width:0; height:2px;
+  background:var(--accent);
+  transition:width .35s cubic-bezier(.25,.46,.45,.94);
+}
+.cert-card:hover::after { width:100%; }
+.cert-num {
+  font-family:'Bitter',serif;
+  font-size:11px; font-weight:400; font-style:italic;
+  color:var(--muted); letter-spacing:.06em;
+}
+.cert-icon {
+  width:44px; height:44px;
+  border:1px solid var(--border-2);
+  background:var(--bg);
+  display:flex; align-items:center; justify-content:center;
+}
+.cert-icon svg { width:18px; height:18px; color:var(--accent); }
+.cert-info { display:flex; flex-direction:column; gap:6px; }
+.cert-name {
+  font-family:'Urbanist',sans-serif;
+  font-size:15px; font-weight:700;
+  color:var(--white); line-height:1.3;
+  letter-spacing:-.01em;
+}
+.cert-issuer {
+  font-family:'Manrope',sans-serif;
+  font-size:12px; color:var(--muted-2);
+}
+.cert-open {
+  margin-top:auto;
+  font-family:'Urbanist',sans-serif;
+  font-size:10px; font-weight:700;
+  letter-spacing:.18em; text-transform:uppercase;
+  color:var(--muted);
+  display:flex; align-items:center; gap:8px;
+  transition:color .2s;
+}
+.cert-card:hover .cert-open { color:var(--accent); }
+.cert-open::before {
+  content:''; width:24px; height:1px;
+  background:currentColor;
+  transition:width .25s;
+}
+.cert-card:hover .cert-open::before { width:40px; }
+
+/* PDF Modal */
+.cert-modal-bg {
+  display:none;
+  position:fixed; inset:0; z-index:1000;
+  background:rgba(0,0,0,.88);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  align-items:center; justify-content:center;
+  padding:40px 20px;
+}
+.cert-modal-bg.open { display:flex; }
+.cert-modal {
+  width:100%; max-width:900px;
+  height:88vh;
+  background:var(--surface);
+  border:1px solid var(--border-2);
+  display:flex; flex-direction:column;
+  position:relative;
+  animation:modalIn .3s cubic-bezier(.25,.46,.45,.94);
+}
+@keyframes modalIn {
+  from { opacity:0; transform:translateY(20px) scale(.98); }
+  to   { opacity:1; transform:translateY(0) scale(1); }
+}
+.cert-modal-bar {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:16px 22px;
+  border-bottom:1px solid var(--border);
+  flex-shrink:0;
+}
+.cert-modal-title {
+  font-family:'Urbanist',sans-serif;
+  font-size:11px; font-weight:700;
+  letter-spacing:.18em; text-transform:uppercase;
+  color:var(--muted-2);
+}
+.cert-modal-close {
+  background:transparent; border:1px solid var(--border-2);
+  color:var(--muted-2);
+  width:32px; height:32px;
+  display:flex; align-items:center; justify-content:center;
+  cursor:none; font-size:16px; line-height:1;
+  transition:all .2s;
+}
+.cert-modal-close:hover { border-color:var(--white); color:var(--white); }
+.cert-modal iframe {
+  width:100%; flex:1; border:none;
+  background:var(--bg);
+}
+
+/* Responsive certs */
+@media(max-width:900px) {
+  #certs { padding:80px 32px; }
+  .cert-grid { grid-template-columns:1fr; }
+}
+@media(max-width:640px) {
+  #certs { padding:60px 24px; }
+  .cert-card { padding:28px 24px; }
+}
+
     /* ============================
        CONTACT SECTION - REDESIGNED
     ============================ */
@@ -1331,6 +1459,7 @@
     <li><a href="#bio">Bio</a></li>
     <li><a href="#projects">Projects</a></li>
     <li><a href="#stack">Stack</a></li>
+    <li><a href="#certs">Certificates</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
 </nav>
@@ -1639,6 +1768,78 @@
   </div>
 </section>
 
+<!-- CERTIFICATES SECTION -->
+<section id="certs">
+  <span class="s-tag">/ 04 — Credentials</span>
+  <h2 class="s-heading reveal">Certificates.</h2>
+
+  <div class="cert-grid">
+
+    <div class="cert-card reveal" onclick="openCert('IBM SkillsBuild — Completion', 'Completion Certificate _ SkillsBuild.pdf')">
+      <span class="cert-num">01 / 03</span>
+      <div class="cert-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+          <line x1="9" y1="12" x2="15" y2="12"/>
+          <line x1="9" y1="16" x2="13" y2="16"/>
+        </svg>
+      </div>
+      <div class="cert-info">
+        <span class="cert-name">Completion Certificate</span>
+        <span class="cert-issuer">IBM SkillsBuild</span>
+      </div>
+      <span class="cert-open">View Certificate</span>
+    </div>
+
+    <div class="cert-card reveal reveal-d1" onclick="openCert('Outskill Certificate', 'Parth_Panchal_Certificate-Outskill.pdf')">
+      <span class="cert-num">02 / 03</span>
+      <div class="cert-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+          <line x1="9" y1="12" x2="15" y2="12"/>
+          <line x1="9" y1="16" x2="13" y2="16"/>
+        </svg>
+      </div>
+      <div class="cert-info">
+        <span class="cert-name">Outskill Certificate</span>
+        <span class="cert-issuer">Outskill</span>
+      </div>
+      <span class="cert-open">View Certificate</span>
+    </div>
+
+    <div class="cert-card reveal reveal-d2" onclick="openCert('Introduction to MCP', 'Introduction to MCP - Certificate.pdf')">
+      <span class="cert-num">03 / 03</span>
+      <div class="cert-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+          <line x1="9" y1="12" x2="15" y2="12"/>
+          <line x1="9" y1="16" x2="13" y2="16"/>
+        </svg>
+      </div>
+      <div class="cert-info">
+        <span class="cert-name">Introduction to MCP</span>
+        <span class="cert-issuer">MCP Course</span>
+      </div>
+      <span class="cert-open">View Certificate</span>
+    </div>
+
+  </div>
+</section>
+
+<!-- PDF MODAL -->
+<div class="cert-modal-bg" id="certModalBg" onclick="closeCertOnBg(event)">
+  <div class="cert-modal">
+    <div class="cert-modal-bar">
+      <span class="cert-modal-title" id="certModalTitle">Certificate</span>
+      <button class="cert-modal-close" onclick="closeCert()">✕</button>
+    </div>
+    <iframe id="certFrame" src="" title="Certificate"></iframe>
+  </div>
+</div>
+
 <!-- CONTACT SECTION -->
 <section id="contact">
   <p class="contact-bg-text">Contact Me</p>
@@ -1814,6 +2015,43 @@
     document.getElementById('fSuccess').classList.add('show');
     setTimeout(()=>document.getElementById('fSuccess').classList.remove('show'), 4000);
   }
+
+  // ========================
+  // CERTIFICATES MODAL
+  // ========================
+  const BASE = 'https://raw.githubusercontent.com/PARTHPANCHAL3656/YOUR_REPO_NAME/main/';
+  
+  function openCert(title, file) {
+    const url = BASE + encodeURIComponent(file);
+    document.getElementById('certModalTitle').textContent = title;
+    document.getElementById('certFrame').src =
+      'https://docs.google.com/viewer?url=' + encodeURIComponent(url) + '&embedded=true';
+    document.getElementById('certModalBg').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  
+  function closeCert() {
+    document.getElementById('certModalBg').classList.remove('open');
+    document.getElementById('certFrame').src = '';
+    document.body.style.overflow = '';
+  }
+  
+  function closeCertOnBg(e) {
+    if (e.target === document.getElementById('certModalBg')) closeCert();
+  }
+  
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeCert();
+  });
+  ```
+  
+  ---
+  
+  ## One thing to update
+  
+  In the JS, replace `YOUR_REPO_NAME` with your actual GitHub repo name. For example if your portfolio lives at `github.com/PARTHPANCHAL3656/portfolio`, it becomes:
+  ```
+  const BASE = 'https://raw.githubusercontent.com/PARTHPANCHAL3656/portfolio/main/';
 </script>
 
 </body>
